@@ -26,9 +26,16 @@ Features?
 =
 Well, 
 
-!start !stop, world records, zone reccords, recent records, zone editing, stats reset and other stuff.
+!start !stop, world records, zone reccords, recent records, zone editing, stats reset and other stuff. 
 
-Take a look into the source code and you will find a lot of stuff i dont remember anymore.
+The zones are using triggers instead of that > x && < y && blah > stuff. It's more accurate and is not wasting additional calculation power. 
+The timer also includes a simple anti-bhop which triggers after 3 jumps (within 1 second? I don't remember).
+
+I also started on a ghost recorder, but i removed the source as i found no quick way to get the replay in sync with the rest of the world. It worked, but the recording played to fast.
+
+There are tons of statistic menus and also i made a hook where the KSF timer was my inspiration. I really like a minimal UI. Greetings to KSF, really inspiring work you did over there ;)
+
+Take a look into the source code and you will find a lot of stuff i don't remember right now.
 
 Map status document
 =
