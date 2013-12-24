@@ -1,0 +1,70 @@
+#pragma semicolon 1
+
+#include <sourcemod>
+
+#include <adminmenu>
+#include <cstrike>
+#include <sdktools>
+#include <smlib/arrays>
+
+
+enum UserJumps
+{
+	LastJumpTimes[3],
+}
+
+new g_userJumps[MAXPLAYERS][UserJumps];
+
+public Plugin:myinfo =
+{
+	name = "[SurfTimer]-AntiBHOP",
+	author = "Stefan Popp (fuxx)",
+	description = "The senseless anti bhop. Cause people are gay...",
+	version = "300513",
+	url = "http://www.stefanpopp.de"
+};
+
+public OnPluginStart()
+{
+	
+	PrintToServer("[SurfTimer]-AntiBHOP loaded...");	
+	HookEvent("player_jump", User_jumped);
+}
+
+public OnClientAuthorized(client, const String:auth[])
+{
+	g_userJumps[client][LastJumpTimes][2] = 0;
+	g_userJumps[client][LastJumpTimes][1] = 0;
+	g_userJumps[client][LastJumpTimes][0] = 0;
+}
+
+public Action:User_jumped(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+	if (client == 0 && ! IsPlayerAlive(client) && ! IsClientObserver(client)) {
+		return Plugin_Continue;
+	}
+
+	new time = GetTime() - g_userJumps[client][LastJumpTimes][2];
+	g_userJumps[client][LastJumpTimes][2] = g_userJumps[client][LastJumpTimes][1];
+	g_userJumps[client][LastJumpTimes][1] = g_userJumps[client][LastJumpTimes][0];
+	g_userJumps[client][LastJumpTimes][0] = GetTime();
+
+	if (time <= 3) {
+		CPrintToChat(client, "%s{red}We do not allow bunny hopping.", "{olive}[Surf-Timer] ");
+		CreateTimer(0.05, DelayedVelocityToZero, client);
+		g_userJumps[client][LastJumpTimes][2] = 0.0;
+		g_userJumps[client][LastJumpTimes][1] = 0.0;
+		g_userJumps[client][LastJumpTimes][0] = 0.0;
+		return Plugin_Handled;
+	}
+
+	return Plugin_Continue;
+}
+
+public Action:DelayedVelocityToZero(Handle:timer, any:client)
+{
+	new Float:origin[3];
+	GetClientAbsOrigin(client, origin);
+	TeleportEntity(client, origin, NULL_VECTOR, {0.0, 0.0, 0.0});
+}
