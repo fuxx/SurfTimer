@@ -39,7 +39,7 @@ Take a look into the source code and you will find a lot of stuff i don't rememb
 
 Map status document
 =
-Here you go <https://docs.google.com/spreadsheet/ccc?key=0Av2VXnsHFp8OdHRobkwxdUx0VVpxak1LeW9sR21CZmc&usp=drive_web#gid=0>
+Here you go <https://docs.google.com/spreadsheet/ccc?key=0Av2VXnsHFp8OdDA5T2lvMTlOQkcwc2x3dmlPMThSSUE&usp=drive_web#gid=0>
 
 Questions?
 =
